@@ -1,0 +1,48 @@
+-- Game: https://www.roblox.com/games/2413927524/The-Rake-REMASTERED
+
+--[[ Controls
+F4 = Hide/Unhide
+F5 = Stop the script
+--]]
+
+--// --------------------------------- \\--
+local plr = game.Players.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "De73c70r"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = plr.PlayerGui
+
+local text = Instance.new("TextLabel")
+text.TextScaled = true
+text.BackgroundTransparency = 1
+text.TextColor3 = Color3.fromRGB(255,255,255)
+text.Size = UDim2.new(0.125,0,0.05,0)
+text.Position = UDim2.new(.85,0,.9,0)
+text.Parent = screenGui
+
+local hide = false
+local stopped = false
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.F4 then
+        if not hide then
+            hide = true
+            text.Visible = false
+        else
+            hide = false
+            text.Visible = true
+        end
+    elseif input.KeyCode == Enum.KeyCode.F5 then
+        stopped = true
+        screenGui:Destroy()
+    end
+end)
+
+while not stopped do
+    if game.Workspace:FindFirstChild("Rake") and char and char:FindFirstChild("HumanoidRootPart") then
+        text.Text = math.floor((plr.Character.HumanoidRootPart.Position - game.Workspace.Rake.HumanoidRootPart.Position).magnitude)
+    end
+    task.wait()
+end
