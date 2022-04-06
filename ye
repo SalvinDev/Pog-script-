@@ -18,7 +18,6 @@ local hide = false
 local stopped = false
 
 game:GetService("UserInputService").InputBegan:Connect(function(input)
-	print(input.KeyCode)
 	if input.KeyCode == Enum.KeyCode.F4 then
 		if not hide then
 			hide = true
