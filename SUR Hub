@@ -3,7 +3,7 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Anjayani"
 screenGui.IgnoreGuiInset = true
 screenGui.ResetOnSpawn = false
-screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+screenGui.Parent = game.CoreGui
 
 local DraggableFrame = Instance.new("Frame")
 DraggableFrame.Position = UDim2.new(0.29,0,0.291,0)
@@ -85,7 +85,7 @@ local buttons = {}
 for i = 1,6 do
 	buttons[buttonNames[i]] = Instance.new("TextButton")
 	local button = buttons[buttonNames[i]]
-	
+
 	button.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 	button.BorderSizePixel = 0
 	button.Size = UDim2.new(0.987,0,0.101,0)
@@ -116,7 +116,7 @@ local MainFrames = {}
 for i = 1,6 do
 	MainFrames[buttonNames[i]] = Instance.new("ScrollingFrame")
 	local frame = MainFrames[buttonNames[i]]
-	
+
 	frame.BackgroundTransparency = 1
 	frame.Position = UDim2.new(0.29,0,0.026,0)
 	frame.Size = UDim2.new(0.699,0,0.945,0)
@@ -125,11 +125,11 @@ for i = 1,6 do
 	frame.Name = "Main_"..buttonNames[i]
 	frame.ZIndex = 100
 	frame.Parent = backgroundFrame
-	
+
 	local uias3 = UIAS:Clone()
 	uias3.AspectRatio = 1.299
 	uias3.Parent = frame
-	
+
 	local uil = uiList:Clone()
 	uil.Padding = UDim.new(0.027, 0)
 	uil.Parent = frame
@@ -178,11 +178,11 @@ for i = 1,3 do
 
 	slot.Size = UDim2.new(0.95,0,0.046,0)
 	slot.Name = "Slot"..i
-	
+
 	slot:FindFirstChildOfClass("UIAspectRatioConstraint").AspectRatio = 12.661
 	slot.TextLabel:FindFirstChildOfClass("UIAspectRatioConstraint").AspectRatio = 11.683
 	slot.TextLabel.Text = "None (None)"
-	
+
 	slot.Parent = MainFrames["Storage"]
 end
 
@@ -326,7 +326,7 @@ buttonsFrame["Farming"].TextColor3 = Color3.fromRGB(255, 221, 84)
 
 for i,v in pairs(buttonsFrame:GetChildren()) do
 	if v:IsA("TextButton") then
-		
+
 		v.MouseButton1Down:Connect(function()
 			MainFrames[currentPage].Visible = false
 			buttonsFrame[currentPage].TextColor3 = Color3.fromRGB(255,255,255)
@@ -334,10 +334,10 @@ for i,v in pairs(buttonsFrame:GetChildren()) do
 			currentPage = v.Name
 			MainFrames[v.Name].Visible = true
 			v.TextColor3 = Color3.fromRGB(255, 221, 84)
-			
+
 			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 		end)
-		
+
 		v.MouseEnter:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
 		end)
@@ -345,7 +345,7 @@ for i,v in pairs(buttonsFrame:GetChildren()) do
 		v.MouseLeave:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 		end)
-		
+
 	end
 end
 
@@ -368,17 +368,17 @@ local buttonFunction_Storage = {
 			end
 		end
 	end,
-	
+
 	["Switch"] = function()
 		local Event = game:GetService("ReplicatedStorage").Events.SwitchStand
 		Event:FireServer("Slot"..SelectedSlot)
 	end,
-	
+
 }
 
 for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
 	if v:IsA("TextButton") then
-		
+
 		v.MouseButton1Down:Connect(function()
 			if buttonFunction_Storage[v.Name] then
 				buttonFunction_Storage[v.Name]()
@@ -389,15 +389,15 @@ for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
 			end
 			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 		end)
-		
+
 		v.MouseEnter:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
 		end)
-		
+
 		v.MouseLeave:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 		end)
-		
+
 	end
 end
 
@@ -408,7 +408,7 @@ coroutine.resume(coroutine.create(function()
 		for i = 1,3 do
 			MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
 		end
-		
+
 		task.wait()
 	end
 end))
