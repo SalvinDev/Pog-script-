@@ -401,14 +401,10 @@ for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
 	end
 end
 
-coroutine.resume(coroutine.create(function()
-	while true do
-		local plrData = game.Players.LocalPlayer.Data
+game:GetService("RunService").Heartbeat:Connect(function()
+	local plrData = game.Players.LocalPlayer.Data
 
-		for i = 1,3 do
-			MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
-		end
-
-		task.wait()
+	for i = 1,3 do
+		MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
 	end
-end))
+end)
