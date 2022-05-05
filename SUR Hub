@@ -1,7 +1,3 @@
---// Detect if the gui already exist
-local existingGui = game.CoreGui:FindFirstChild("Anjayani")
-if existingGui then existingGui:Destroy() end
-
 --// Creating the gui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Anjayani"
