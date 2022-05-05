@@ -1,0 +1,414 @@
+--// Creating the gui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "Anjayani"
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+
+local DraggableFrame = Instance.new("Frame")
+DraggableFrame.Position = UDim2.new(0.29,0,0.291,0)
+DraggableFrame.BackgroundColor3 = Color3.fromRGB(56, 57, 80)
+DraggableFrame.BorderSizePixel = 0
+DraggableFrame.Name = "Draggable"
+DraggableFrame.Size = UDim2.new(0.42,0,0.027,0)
+DraggableFrame.Parent = screenGui
+
+local title = Instance.new("TextLabel")
+title.BackgroundTransparency = 1
+title.Position = UDim2.new(0.014,0,0.107,0)
+title.Size = UDim2.new(0.985,0,0.786,0)
+title.Text = "Anjayani"
+title.TextScaled = true
+title.Font = Enum.Font.Merriweather
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.TextTransparency = 0.35
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = DraggableFrame
+
+local uiT = Instance.new("UITextSizeConstraint")
+uiT.MaxTextSize = 22
+uiT.MinTextSize = 1
+uiT.Parent = title
+
+local UIAS = Instance.new("UIAspectRatioConstraint")
+UIAS.AspectRatio = 22.832
+UIAS.AspectType = Enum.AspectType.FitWithinMaxSize
+UIAS.Parent = DraggableFrame
+
+local backgroundFrame = DraggableFrame:Clone()
+backgroundFrame.Size = UDim2.new(1,0,13.004,0)
+backgroundFrame.Position = UDim2.new(-0,0,0.965,0)
+backgroundFrame.BackgroundColor3 = Color3.fromRGB(40, 41, 57)
+backgroundFrame.Name = "Background"
+backgroundFrame.Parent = DraggableFrame
+backgroundFrame:ClearAllChildren()
+
+local uias = UIAS:Clone()
+uias.AspectRatio = 1.756
+uias.Parent = backgroundFrame
+
+local menu = DraggableFrame:Clone()
+menu.Position = UDim2.new(0.015,0,0.026,0)
+menu.Size = UDim2.new(0.261,0,0.948,0)
+menu.Name = "Menu"
+menu.Parent = backgroundFrame
+menu:ClearAllChildren()
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0.03, 0)
+uiCorner.Parent = menu
+
+local uias1 = UIAS:Clone()
+uias1.AspectRatio = 0.483
+uias1.Parent = menu
+
+local buttonsFrame = DraggableFrame:Clone()
+buttonsFrame.BackgroundTransparency = 1
+buttonsFrame.Position = UDim2.new(0.053,0,0.025,0)
+buttonsFrame.Name = "Buttons"
+buttonsFrame.Size = UDim2.new(0.9,0,0.953,0)
+buttonsFrame.Parent = menu
+buttonsFrame:ClearAllChildren()
+
+local uias2 = UIAS:Clone()
+uias2.AspectRatio = 0.456
+uias2.Parent = buttonsFrame
+
+local uiList = Instance.new("UIListLayout")
+uiList.Padding = UDim.new(0.05, 0)
+uiList.SortOrder = Enum.SortOrder.LayoutOrder
+uiList.Parent = buttonsFrame
+
+local buttonNames = {"Farming","Shop","Storage","Notifier","Webhook","Misc"}
+local buttons = {}
+
+for i = 1,6 do
+	buttons[buttonNames[i]] = Instance.new("TextButton")
+	local button = buttons[buttonNames[i]]
+	
+	button.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+	button.BorderSizePixel = 0
+	button.Size = UDim2.new(0.987,0,0.101,0)
+	button.Text = buttonNames[i]
+	button.TextColor3 = Color3.fromRGB(255,255,255)
+	button.TextScaled = true
+	button.Font = Enum.Font.Merriweather
+	button.AutoButtonColor = false
+	button.Name = buttonNames[i]
+	button.Parent = buttonsFrame
+
+	local uias3 = UIAS:Clone()
+	uias3.AspectRatio = 4.454
+	uias3.Parent = button
+
+	local uic = uiCorner:Clone()
+	uic.CornerRadius = UDim.new(0,8)
+	uic.Parent = button
+
+	local uit = uiT:Clone()
+	uit.MaxTextSize = 18
+	uit.MinTextSize = 1
+	uit.Parent = button
+end
+
+local MainFrames = {}
+
+for i = 1,6 do
+	MainFrames[buttonNames[i]] = Instance.new("ScrollingFrame")
+	local frame = MainFrames[buttonNames[i]]
+	
+	frame.BackgroundTransparency = 1
+	frame.Position = UDim2.new(0.29,0,0.026,0)
+	frame.Size = UDim2.new(0.699,0,0.945,0)
+	frame.ScrollBarThickness = 4
+	frame.Visible = false
+	frame.Name = "Main_"..buttonNames[i]
+	frame.ZIndex = 100
+	frame.Parent = backgroundFrame
+	
+	local uias3 = UIAS:Clone()
+	uias3.AspectRatio = 1.299
+	uias3.Parent = frame
+	
+	local uil = uiList:Clone()
+	uil.Padding = UDim.new(0.027, 0)
+	uil.Parent = frame
+end
+
+--// Storage frame things
+local SelectButton = Instance.new("TextButton")
+SelectButton.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+SelectButton.Size = UDim2.new(0.976,0,0.046,0)
+SelectButton.Font = Enum.Font.Merriweather
+SelectButton.Text = ""
+SelectButton.Name = "Select"
+SelectButton.Parent = MainFrames["Storage"]
+
+local uias4 = uias:Clone()
+uias4.AspectRatio = 13.006
+uias4.Parent = SelectButton
+
+local uic = uiCorner:Clone()
+uic.CornerRadius = UDim.new(0,8)
+uic.Parent = SelectButton
+
+local SelectText = title:Clone()
+SelectText.Text = "Select a Stand"
+SelectText.Size = UDim2.new(0.982,0,.958,0)
+SelectText.Position = UDim2.new(0.018,0,0.018,0)
+SelectText.TextTransparency = 0
+SelectText.Parent = SelectButton
+SelectText:ClearAllChildren()
+
+local uias5 = uias:Clone()
+uias5.AspectRatio = 13.326
+uias5.Parent = SelectText
+
+local uit2 = uiT:Clone()
+uit2.MaxTextSize = 18
+uit2.MinTextSize = 1
+uit2.Parent = SelectText
+
+local StorageSlot = {}
+
+for i = 1,3 do
+	StorageSlot["Slot"..i] = SelectButton:Clone()
+	local slot = StorageSlot["Slot"..i]
+	slot.Visible = false
+
+	slot.Size = UDim2.new(0.95,0,0.046,0)
+	slot.Name = "Slot"..i
+	
+	slot:FindFirstChildOfClass("UIAspectRatioConstraint").AspectRatio = 12.661
+	slot.TextLabel:FindFirstChildOfClass("UIAspectRatioConstraint").AspectRatio = 11.683
+	slot.TextLabel.Text = "None (None)"
+	
+	slot.Parent = MainFrames["Storage"]
+end
+
+local switchButton = SelectButton:Clone()
+switchButton.TextLabel.Text = "Switch Stand"
+switchButton.Name = "Switch"
+switchButton.Parent = MainFrames["Storage"]
+
+--// Shop frame things
+local items = {
+	"Stand Arrow",
+	"5x Stand Arrow",
+	"Rokakaka",
+	"5x Rokakaka",
+	"Charged Arrow",
+	"Dio's Diary",
+	"Requiem Arrow",
+	"Skull"
+}
+
+local shopButtons = {}
+
+local selectButton_Shop = SelectButton:Clone()
+selectButton_Shop.TextLabel.Text = "Select an item to buy"
+selectButton_Shop.Parent = MainFrames["Shop"]
+
+for i = 1,#items do
+	shopButtons[items[i]] = StorageSlot["Slot1"]:Clone()
+	local button = shopButtons[items[i]]
+	button.Visible = false
+	button.Name = items[i]
+	button.TextLabel.Text = items[i]
+	button.Parent = MainFrames["Shop"]
+end
+
+local BuyButton = selectButton_Shop:Clone()
+BuyButton.TextLabel.Text = "Buy item"
+BuyButton.Name = "Buy"
+BuyButton.Parent = MainFrames["Shop"]
+
+--// Notifier things
+MainFrames["Notifier"].CanvasSize = UDim2.new(0,0,2.5,0)
+
+local notifyBoss = {
+	"Johnny Joestar",
+	"Jotaro Over Heaven"
+}
+
+local notifyItem = {
+	"Stand Arrow",
+	"Rokakaka",
+	"Charged Arrow",
+	"Requiem Arrow",
+	"Cursed Orb",
+	"Aja Mask",
+	"Dio's Diary",
+	"Green Baby",
+	"Ketchup",
+	"Vampire Mask"
+}
+
+local NPCsButton = {}
+local itemsButton = {}
+
+local SelectNPC_Button = SelectButton:Clone()
+SelectNPC_Button.TextLabel.Text = "Select NPC(s)"
+SelectNPC_Button.Name = "SelectNPC"
+SelectNPC_Button.Parent = MainFrames["Notifier"]
+
+for i = 1,#notifyBoss do
+	NPCsButton[notifyBoss[i]] = StorageSlot["Slot1"]:Clone()
+	local button = NPCsButton[notifyBoss[i]]
+	button.Visible = false
+	button.Name = notifyBoss[i]
+	button.TextLabel.Text = notifyBoss[i]
+	button.Parent = MainFrames["Notifier"]
+end
+
+local SelectItem_Button = SelectButton:Clone()
+SelectItem_Button.TextLabel.Text = "Select Item(s)"
+SelectItem_Button.Name = "SelectItem"
+SelectItem_Button.Parent = MainFrames["Notifier"]
+
+for i = 1,#notifyItem do
+	itemsButton[notifyItem[i]] = StorageSlot["Slot1"]:Clone()
+	local button = itemsButton[notifyItem[i]]
+	button.Visible = false
+	button.Name = notifyItem[i]
+	button.TextLabel.Text = notifyItem[i]
+	button.Parent = MainFrames["Notifier"]
+end
+
+local Activate_Notifier = SelectButton:Clone()
+Activate_Notifier.TextLabel.Text = "Activate"
+Activate_Notifier.Name = "Activate/Deactivate"
+Activate_Notifier.Parent = MainFrames["Notifier"]
+
+--// Draggable script
+local gui = DraggableFrame
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+gui.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = gui.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+gui.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
+
+--// Menu Main Script
+local currentPage = "Farming"
+MainFrames["Farming"].Visible = true
+buttonsFrame["Farming"].TextColor3 = Color3.fromRGB(255, 221, 84)
+
+for i,v in pairs(buttonsFrame:GetChildren()) do
+	if v:IsA("TextButton") then
+		
+		v.MouseButton1Down:Connect(function()
+			MainFrames[currentPage].Visible = false
+			buttonsFrame[currentPage].TextColor3 = Color3.fromRGB(255,255,255)
+
+			currentPage = v.Name
+			MainFrames[v.Name].Visible = true
+			v.TextColor3 = Color3.fromRGB(255, 221, 84)
+			
+			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+		end)
+		
+		v.MouseEnter:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
+		end)
+
+		v.MouseLeave:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+		end)
+		
+	end
+end
+
+--// Storage Main Script
+local opened = false
+local SelectedSlot = 1
+MainFrames["Storage"].Slot1.TextLabel.TextColor3 = Color3.fromRGB(255, 221, 84)
+
+local buttonFunction_Storage = {
+	["Select"] = function()
+		if not opened then
+			opened = true
+			for i = 1,3 do
+				MainFrames["Storage"]["Slot"..i].Visible = true
+			end
+		else
+			opened = false
+			for i = 1,3 do
+				MainFrames["Storage"]["Slot"..i].Visible = false
+			end
+		end
+	end,
+	
+	["Switch"] = function()
+		local Event = game:GetService("ReplicatedStorage").Events.SwitchStand
+		Event:FireServer("Slot"..SelectedSlot)
+	end,
+	
+}
+
+for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
+	if v:IsA("TextButton") then
+		
+		v.MouseButton1Down:Connect(function()
+			if buttonFunction_Storage[v.Name] then
+				buttonFunction_Storage[v.Name]()
+			else
+				MainFrames["Storage"]["Slot"..SelectedSlot].TextLabel.TextColor3 = Color3.fromRGB(255,255,255)
+				SelectedSlot = tonumber(v.Name:split("Slot")[2])
+				v.TextLabel.TextColor3 = Color3.fromRGB(255, 221, 84)
+			end
+			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+		end)
+		
+		v.MouseEnter:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
+		end)
+		
+		v.MouseLeave:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+		end)
+		
+	end
+end
+
+coroutine.resume(coroutine.create(function()
+	while true do
+		local plrData = game.Players.LocalPlayer.Data
+
+		for i = 1,3 do
+			MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
+		end
+		
+		task.wait()
+	end
+end))
