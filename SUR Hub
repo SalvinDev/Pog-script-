@@ -223,6 +223,15 @@ BuyButton.TextLabel.Text = "Buy item"
 BuyButton.Name = "Buy"
 BuyButton.Parent = MainFrames["Shop"]
 
+local amount = Instance.new("TextBox")
+amount.BackgroundColor3 = Color3.fromRGB(65, 67, 94)
+amount.Position = UDim2.new(0.482,0,0.235,0)
+amount.Size = UDim2.new(0.461,0,0.475,0)
+amount.Font = Enum.Font.Merriweather
+amount.TextScaled = true
+amount.Text = "Amount"
+amount.Parent = BuyButton
+
 --// Notifier things
 MainFrames["Notifier"].CanvasSize = UDim2.new(0,0,2.5,0)
 
@@ -403,8 +412,10 @@ end
 
 game:GetService("RunService").Heartbeat:Connect(function()
 	local plrData = game.Players.LocalPlayer.Data
-
 	for i = 1,3 do
 		MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
 	end
 end)
+
+--// Shop main script
+
