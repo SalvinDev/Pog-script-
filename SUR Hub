@@ -229,6 +229,7 @@ amount.Position = UDim2.new(0.482,0,0.235,0)
 amount.Size = UDim2.new(0.461,0,0.475,0)
 amount.Font = Enum.Font.Merriweather
 amount.TextScaled = true
+amount.TextColor3 = Color3.fromRGB(255,255,255)
 amount.Text = "Amount"
 amount.Parent = BuyButton
 
