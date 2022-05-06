@@ -254,13 +254,17 @@ BuyButton.Parent = MainFrames["Shop"]
 
 local amount = Instance.new("TextBox")
 amount.BackgroundColor3 = Color3.fromRGB(65, 67, 94)
-amount.Position = UDim2.new(0.482,0,0.235,0)
-amount.Size = UDim2.new(0.461,0,0.475,0)
+amount.Position = UDim2.new(0.485,0,0.167,0)
+amount.Size = UDim2.new(0.461,0,0.694,0)
 amount.Font = Enum.Font.Merriweather
 amount.TextScaled = true
 amount.TextColor3 = Color3.fromRGB(255,255,255)
 amount.Text = "Amount"
 amount.Parent = BuyButton
+
+local uico = uic:Clone()
+uico.CornerRadius = UDim.new(0.3,0)
+uico.Parent = amount
 
 amount:GetPropertyChangedSignal("Text"):Connect(function() --// Number only
 	amount.Text = amount.Text:gsub('%D+', '')
