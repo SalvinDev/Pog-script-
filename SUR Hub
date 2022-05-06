@@ -552,8 +552,9 @@ local buttonFunction_Shop = {
 		local amount = tonumber(amount.Text)
 		local itemInfo = info[selectedItem]["Merchant"]
 		for i = 1,amount do
+			print(itemInfo["Merchant"],itemInfo["Option"])
+			
 			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
-			print"B"
 			task.wait()
 		end
 
