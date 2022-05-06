@@ -550,10 +550,8 @@ local buttonFunction_Shop = {
 	["Buy"] = function()
 		local Event = game:GetService("ReplicatedStorage").Events.BuyItem
 		local amount = tonumber(amount.Text)
-		local itemInfo = info[selectedItem]["Merchant"]
+		local itemInfo = info[selectedItem]
 		for i = 1,amount do
-			print(itemInfo["Merchant"],itemInfo["Option"])
-			
 			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
 			task.wait()
 		end
