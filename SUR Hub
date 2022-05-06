@@ -373,7 +373,7 @@ local buttonFunction_Header = {
 			backgroundFrame.Visible = true
 		end
 	end,
-	
+
 	["Close"] = function()
 		gui:Destroy()
 	end,
@@ -381,11 +381,11 @@ local buttonFunction_Header = {
 
 for i,v in pairs(DraggableFrame:GetChildren()) do
 	if v:IsA("ImageButton") then
-		
+
 		v.MouseButton1Down:Connect(function()
 			buttonFunction_Header[v.Name]()
 		end)
-		
+
 	end
 end
 
@@ -485,42 +485,42 @@ local info = {
 		["Merchant"] = "MerchantAU",
 		["Option"] = "Option4"
 	},
-	
+
 	["5x Stand Arrow"] = {
 		["Merchant"] = "MerchantAU",
 		["Option"] = "Option3"
 	},
-	
+
 	["Rokakaka"] = {
 		["Merchant"] = "MerchantAU",
 		["Option"] = "Option2"
 	},
-	
+
 	["5x Rokakaka"] = {
 		["Merchant"] = "MerchantAU",
 		["Option"] = "Option1"
 	},
-	
+
 	["Charged Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
 		["Option"] = "Option2"
 	},
-	
+
 	["5x Charged Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
 		["Option"] = "Option1"
 	},
-	
+
 	["Requiem Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
 		["Option"] = "Option4"
 	},
-	
+
 	["Dio's Diary"] = {
 		["Merchant"] = "Merchantlvl120",
 		["Option"] = "Option3"
 	},
-	
+
 	["Skull"] = {
 		["Merchant"] = "???",
 		["Option"] = "Option1"
@@ -546,24 +546,23 @@ local buttonFunction_Shop = {
 			end
 		end
 	end,
-	
+
 	["Buy"] = function()
 		local Event = game:GetService("ReplicatedStorage").Events.BuyItem
 		local amount = tonumber(amount.Text)
 		local itemInfo = info[selectedItem]["Merchant"]
-                print"A"
 		for i = 1,amount do
-		print"B"
 			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
+			print"B"
 			task.wait()
 		end
-		
+
 	end,
 }
 
 for i,v in pairs(MainFrames["Shop"]:GetChildren()) do
 	if v:IsA("TextButton") then
-		
+
 		v.MouseButton1Down:Connect(function()
 			if buttonFunction_Shop[v.Name] then
 				buttonFunction_Shop[v.Name]()
@@ -573,7 +572,7 @@ for i,v in pairs(MainFrames["Shop"]:GetChildren()) do
 				v.TextLabel.TextColor3 = Color3.fromRGB(255, 221, 84)
 			end
 		end)
-		
+
 		v.MouseEnter:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
 		end)
@@ -581,6 +580,6 @@ for i,v in pairs(MainFrames["Shop"]:GetChildren()) do
 		v.MouseLeave:Connect(function()
 			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
 		end)
-		
+
 	end
 end
