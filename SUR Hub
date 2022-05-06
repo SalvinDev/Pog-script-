@@ -3,7 +3,7 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Anjayani"
 screenGui.IgnoreGuiInset = true
 screenGui.ResetOnSpawn = false
-screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+screenGui.Parent = game.CoreGui
 
 local DraggableFrame = Instance.new("Frame")
 DraggableFrame.Position = UDim2.new(0.29,0,0.291,0)
