@@ -3,7 +3,7 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Anjayani"
 screenGui.IgnoreGuiInset = true
 screenGui.ResetOnSpawn = false
-screenGui.Parent = game.CoreGui
+screenGui.Parent = game.Players.LocalPlayer.PlayerGui
 
 local DraggableFrame = Instance.new("Frame")
 DraggableFrame.Position = UDim2.new(0.29,0,0.291,0)
@@ -24,6 +24,31 @@ title.TextColor3 = Color3.fromRGB(255,255,255)
 title.TextTransparency = 0.35
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = DraggableFrame
+
+local minimize = Instance.new("ImageButton")
+minimize.BackgroundTransparency = 0.15
+minimize.BackgroundColor3 = Color3.fromRGB(40, 41, 57)
+minimize.BorderSizePixel = 0
+minimize.Position = UDim2.new(0.879,0,0.041,0)
+minimize.Size = UDim2.new(0.039,0,0.893,0)
+minimize.Name = "Minimize"
+minimize.Image = "rbxassetid://848225982"
+minimize.Parent = DraggableFrame
+
+local uicMinimize = Instance.new("UICorner")
+uicMinimize.CornerRadius = UDim.new(0.2,0)
+uicMinimize.Parent = minimize
+
+local close = minimize:Clone()
+close.BackgroundTransparency = 1
+close.Position = UDim2.new(0.947,0,0.041,0)
+close.Size = UDim2.new(0.039,0,0.893,0)
+close.Image = "rbxassetid://575072552"
+close.Name = "Close"
+close.Parent = DraggableFrame
+
+local uicClose = uicMinimize:Clone()
+uicClose.Parent = close
 
 local uiT = Instance.new("UITextSizeConstraint")
 uiT.MaxTextSize = 22
@@ -142,6 +167,7 @@ SelectButton.Size = UDim2.new(0.976,0,0.046,0)
 SelectButton.Font = Enum.Font.Merriweather
 SelectButton.Text = ""
 SelectButton.Name = "Select"
+SelectButton.AutoButtonColor = false
 SelectButton.Parent = MainFrames["Storage"]
 
 local uias4 = uias:Clone()
@@ -198,6 +224,7 @@ local items = {
 	"Rokakaka",
 	"5x Rokakaka",
 	"Charged Arrow",
+	"5x Charged Arrow",
 	"Dio's Diary",
 	"Requiem Arrow",
 	"Skull"
@@ -232,6 +259,10 @@ amount.TextScaled = true
 amount.TextColor3 = Color3.fromRGB(255,255,255)
 amount.Text = "Amount"
 amount.Parent = BuyButton
+
+amount:GetPropertyChangedSignal("Text"):Connect(function() --// Number only
+	amount.Text = amount.Text:gsub('%D+', '');
+end)
 
 --// Notifier things
 MainFrames["Notifier"].CanvasSize = UDim2.new(0,0,2.5,0)
@@ -329,6 +360,36 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
 	end
 end)
 
+--// Minimize and Close button script
+local minimized = false
+
+local buttonFunction_Header = {
+	["Minimize"] = function()
+		if not minimized then
+			minimized = true
+			backgroundFrame.Visible = false
+		else
+			minimized = false
+			backgroundFrame.Visible = true
+		end
+	end,
+	
+	["Close"] = function()
+		gui:Destroy()
+	end,
+}
+
+for i,v in pairs(DraggableFrame:GetChildren()) do
+	if v:IsA("ImageButton") then
+		
+		v.MouseButton1Down:Connect(function()
+			buttonFunction_Header[v.Name]()
+		end)
+		
+	end
+end
+
+
 --// Menu Main Script
 local currentPage = "Farming"
 MainFrames["Farming"].Visible = true
@@ -411,11 +472,115 @@ for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
 	end
 end
 
-game:GetService("RunService").Heartbeat:Connect(function()
+--[[game:GetService("RunService").Heartbeat:Connect(function()
 	local plrData = game.Players.LocalPlayer.Data
 	for i = 1,3 do
 		MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
 	end
 end)
-
+]]
 --// Shop main script
+
+local info = {
+	["Stand Arrow"] = {
+		["Merchant"] = "MerchantAU",
+		["Option"] = "Option4"
+	},
+	
+	["5x Stand Arrow"] = {
+		["Merchant"] = "MerchantAU",
+		["Option"] = "Option3"
+	},
+	
+	["Rokakaka"] = {
+		["Merchant"] = "MerchantAU",
+		["Option"] = "Option2"
+	},
+	
+	["5x Rokakaka"] = {
+		["Merchant"] = "MerchantAU",
+		["Option"] = "Option1"
+	},
+	
+	["Charged Arrow"] = {
+		["Merchant"] = "Merchantlvl120",
+		["Option"] = "Option2"
+	},
+	
+	["5x Charged Arrow"] = {
+		["Merchant"] = "Merchantlvl120",
+		["Option"] = "Option1"
+	},
+	
+	["Requiem Arrow"] = {
+		["Merchant"] = "Merchantlvl120",
+		["Option"] = "Option4"
+	},
+	
+	["Dio's Diary"] = {
+		["Merchant"] = "Merchantlvl120",
+		["Option"] = "Option3"
+	},
+	
+	["Skull"] = {
+		["Merchant"] = "???",
+		["Option"] = "Option1"
+	},
+}
+
+local opened = false
+
+local selectedItem = "Stand Arrow"
+shopButtons["Stand Arrow"].TextLabel.TextColor3 = Color3.fromRGB(255, 221, 84)
+
+local buttonFunction_Shop = {
+	["Select"] = function()
+		if not opened then
+			opened = true
+			for i = 1,#items do
+				MainFrames["Shop"][items[i]].Visible = true
+			end
+		else
+			opened = false
+			for i = 1,#items do
+				MainFrames["Shop"][items[i]].Visible = false
+			end
+		end
+	end,
+	
+	["Buy"] = function()
+		local Event = game:GetService("ReplicatedStorage").Events.BuyItem
+		local amount = tonumber(amount.Text)
+		local itemInfo = info[selectedItem]["Merchant"]
+
+		for i = 1,amount do
+			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
+			task.wait()
+		end
+		
+	end,
+}
+
+for i,v in pairs(MainFrames["Shop"]:GetChildren()) do
+	if v:IsA("TextButton") then
+		
+		v.MouseButton1Down:Connect(function()
+			if buttonFunction_Shop[v.Name] then
+				buttonFunction_Shop[v.Name]()
+			else
+				MainFrames["Shop"][selectedItem].TextLabel.TextColor3 = Color3.fromRGB(255,255,255)
+				selectedItem = v.Name
+				v.TextLabel.TextColor3 = Color3.fromRGB(255, 221, 84)
+			end
+		end)
+		
+		v.MouseEnter:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(96, 99, 138)
+		end)
+
+		v.MouseLeave:Connect(function()
+			v.BackgroundColor3 = Color3.fromRGB(81, 83, 116)
+		end)
+		
+	end
+end
