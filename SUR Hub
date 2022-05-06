@@ -330,6 +330,10 @@ soundButton.Amount.Name = "SoundID"
 soundButton.SoundID.Text = "Sound ID"
 soundButton.Parent = MainFrames["Notifier"]
 
+soundButton.SoundID:GetPropertyChangedSignal("Text"):Connect(function() --// Number only
+	amount.Text = amount.Text:gsub('%D+', '')
+end)
+
 local webhookButton_Notifier = SelectButton:Clone()
 webhookButton_Notifier.Name = "Webhook"
 webhookButton_Notifier.TextLabel.Text = "Use Webhook"
