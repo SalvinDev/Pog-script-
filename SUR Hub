@@ -577,7 +577,12 @@ local buttonFunction_Shop = {
 	["Buy"] = function()
 		local Event = game:GetService("ReplicatedStorage").Events.BuyItem
 		local amountNum = tonumber(amount.Text)
+		
 		local itemInfo = info[selectedItem]
+		local itemCost = itemInfo["Cost"]
+		if plr.Data.ChrSkillPointsFolder.SecurePocket_1.Value then 
+			itemCost -= itemCost * 0.40 --// If player has secure pocket, decreases item cost by 40%
+		end
 		
 		local plrCash = plr.Data.Cash.Value
 		local itemsUntilFull = 500 - #plr.Backpack:GetChildren()
@@ -597,9 +602,9 @@ local buttonFunction_Shop = {
 		end
 		
 		for i = 1,amountNum do
-			if plrCash < itemInfo["Cost"] then return end
+			if plrCash < itemInfo["Cost"] then return end --// itemInfo["Cost"] to get the original cost, not the 40% discount one. Becuz thats just how the shop work /shrug
 			
-			plrCash -= itemInfo["Cost"]
+			plrCash -= itemCost
 			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
 			task.wait()
 		end
