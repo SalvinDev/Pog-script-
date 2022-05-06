@@ -522,7 +522,7 @@ local info = {
 	},
 
 	["Skull"] = {
-		["Merchant"] = "???",
+		["Merchant"] = "MerchantHomeless",
 		["Option"] = "Option1"
 	},
 }
