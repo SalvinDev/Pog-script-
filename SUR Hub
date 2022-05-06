@@ -396,7 +396,7 @@ local buttonFunction_Header = {
 
 	["Close"] = function()
 		closed = true
-		gui:Destroy()
+		screenGui:Destroy()
 	end,
 }
 
