@@ -362,6 +362,7 @@ end)
 
 --// Minimize and Close button script
 local minimized = false
+local closed = false
 
 local buttonFunction_Header = {
 	["Minimize"] = function()
@@ -375,6 +376,7 @@ local buttonFunction_Header = {
 	end,
 
 	["Close"] = function()
+		closed = true
 		gui:Destroy()
 	end,
 }
@@ -472,8 +474,9 @@ for i,v in pairs(MainFrames["Storage"]:GetChildren()) do
 	end
 end
 
-game:GetService("RunService").Heartbeat:Connect(function()
-	if not screenGui or not screenGui.Parent then return end
+storageConnection = game:GetService("RunService").Heartbeat:Connect(function()
+	if closed then storageConnection:Disconnect() return end
+	
 	local plrData = game.Players.LocalPlayer.Data
 	for i = 1,3 do
 		MainFrames["Storage"]["Slot"..i].TextLabel.Text = plrData["Slot"..i.."Stand"].Value.." ("..plrData["Slot"..i.."Attri"].Value..")"
@@ -484,47 +487,56 @@ end)
 local info = {
 	["Stand Arrow"] = {
 		["Merchant"] = "MerchantAU",
-		["Option"] = "Option4"
+		["Option"] = "Option4",
+		["Cost"] = 3500
 	},
 
 	["5x Stand Arrow"] = {
 		["Merchant"] = "MerchantAU",
-		["Option"] = "Option3"
+		["Option"] = "Option3",
+		["Cost"] = 17500
 	},
 
 	["Rokakaka"] = {
 		["Merchant"] = "MerchantAU",
-		["Option"] = "Option2"
+		["Option"] = "Option2",
+		["Cost"] = 2500
 	},
 
 	["5x Rokakaka"] = {
 		["Merchant"] = "MerchantAU",
-		["Option"] = "Option1"
+		["Option"] = "Option1",
+		["Cost"] = 12500
 	},
 
 	["Charged Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
-		["Option"] = "Option2"
+		["Option"] = "Option2",
+		["Cost"] = 50000
 	},
 
 	["5x Charged Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
-		["Option"] = "Option1"
+		["Option"] = "Option1",
+		["Cost"] = 225000
 	},
 
 	["Requiem Arrow"] = {
 		["Merchant"] = "Merchantlvl120",
-		["Option"] = "Option4"
+		["Option"] = "Option4",
+		["Cost"] = 1500000
 	},
 
 	["Dio's Diary"] = {
 		["Merchant"] = "Merchantlvl120",
-		["Option"] = "Option3"
+		["Option"] = "Option3",
+		["Cost"] = 1500000
 	},
 
 	["Skull"] = {
 		["Merchant"] = "MerchantHomeless",
-		["Option"] = "Option1"
+		["Option"] = "Option1",
+		["Cost"] = 500000
 	},
 }
 
@@ -553,6 +565,8 @@ local buttonFunction_Shop = {
 		local amount = tonumber(amount.Text)
 		local itemInfo = info[selectedItem]
 		for i = 1,amount do
+			if game.Players.LocalPlayer.Data.Cash.Value < itemInfo["Cost"] then break end
+			
 			Event:FireServer(itemInfo["Merchant"], itemInfo["Option"]) 
 			task.wait()
 		end
