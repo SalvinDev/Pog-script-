@@ -259,6 +259,7 @@ amount.Size = UDim2.new(0.461,0,0.694,0)
 amount.Font = Enum.Font.Merriweather
 amount.TextScaled = true
 amount.TextColor3 = Color3.fromRGB(255,255,255)
+amount.Name = "Amount"
 amount.Text = "Amount"
 amount.Parent = BuyButton
 
@@ -321,6 +322,13 @@ for i = 1,#notifyItem do
 	button.TextLabel.Text = notifyItem[i]
 	button.Parent = MainFrames["Notifier"]
 end
+
+local soundButton = BuyButton:Clone()
+soundButton.Name = "Sound"
+soundButton.TextLabel.Text = "Sound Off"
+soundButton.Amount.Name = "SoundID"
+soundButton.SoundID.Text = "Sound ID"
+soundButton.Parent = MainFrames["Notifier"]
 
 local Activate_Notifier = SelectButton:Clone()
 Activate_Notifier.TextLabel.Text = "Activate"
